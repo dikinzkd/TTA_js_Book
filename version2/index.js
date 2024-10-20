@@ -26,8 +26,10 @@ const dispalyRecipes = () =>{
 
         recipeCard.innerHTML =`
         <h2  class="text-lg font-bold">${recipe.title}</h2>
-        <p class="text-sm text-gray-400"><strong>Ingredients: <strong/>${recipe.ingredients}</p>
-        <p  class="text-sm"><strong>Steps: <strong/>${recipe.steps}</p>
+        <p class="text-sm text-gray-400 font-thin"><strong>Ingredients: <strong/>${recipe.ingredients}</p>
+        <p  class="text-sm font-thin"><strong>Steps: <strong/>${recipe.steps}</p>
+        <button class="bg-blue-500 text-white px-2 py-1 rounded mt-2">Edit<button>
+        <button class="bg-red-500 text-white px-2 py-1 rounded m-2">Delete<button>
         `;
         recipelist.appendChild(recipeCard);
     }
