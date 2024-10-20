@@ -41,18 +41,25 @@ const addRecipe = (event) =>{
       const recipeStep = document.getElementById("recipeStep").value.trim();
 
       if (recipeTitle !== "" && recipeIngredients !== "" && recipeStep !== "") {
-        const newRecipe ={
-            title: recipeTitle,
-            ingredients: recipeIngredients,
-            steps: recipeStep,
+
+        const isDuplicated = recipes.some((recipes) => recipes.title.toLocaleLowerCase === recipeTitle.toLocaleLowerCase);
+        if(isDuplicated) {
+             alert("Recipe already exists")
+        }else {
+            const newRecipe ={
+                title: recipeTitle,
+                ingredients: recipeIngredients,
+                steps: recipeStep,
+            }
+            recipes.push(newRecipe);
+            
+            document.getElementById("recipeTitle").value ="";
+            document.getElementById("recipeIngredients").value ="";
+            document.getElementById("recipeStep").value ="";
+     
+            dispalyRecipes(); 
         }
-        recipes.push(newRecipe);
-        
-        document.getElementById("recipeTitle").value ="";
-        document.getElementById("recipeIngredients").value ="";
-        document.getElementById("recipeStep").value ="";
- 
-        dispalyRecipes();
+
       }else{
         alert("please fill out all the fields")
       }
