@@ -36,11 +36,11 @@ const dispalyRecipes = () =>{
 
 const addRecipe = (event) =>{
       event.preventDefault();
-      const recipeTitle = document.getElementById("recipeTitle").value;
-      const recipeIngredients = document.getElementById("recipeIngredients").value;
-      const recipeStep = document.getElementById("recipeStep").value;
+      const recipeTitle = document.getElementById("recipeTitle").value.trim();
+      const recipeIngredients = document.getElementById("recipeIngredients").value.trim();
+      const recipeStep = document.getElementById("recipeStep").value.trim();
 
-      if (recipeTitle.trim() !== "" && recipeIngredients.trim() !== "" && recipeStep.trim() !== "") {
+      if (recipeTitle !== "" && recipeIngredients !== "" && recipeStep !== "") {
         const newRecipe ={
             title: recipeTitle,
             ingredients: recipeIngredients,
@@ -58,7 +58,9 @@ const addRecipe = (event) =>{
       }
 }
 
-const recipeForm = document.getElementById("recipeForm");
-recipeForm.addEventListener("submit", addRecipe);
+// const recipeForm = document.getElementById("recipeForm");
+// recipeForm.addEventListener("submit", addRecipe);
+
+document.querySelector("#addRecipe").addEventListener("click", addRecipe);
 
 dispalyRecipes();
