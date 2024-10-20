@@ -14,11 +14,6 @@ const recipes =[
         ingredients: "Broccoli, Carrots, Bell Peppers, Soy Sauce, Garlic, Olive Oil",
         steps: "1. Stir-fry vegetables in olive oil. 2. Add garlic and soy sauce. 3. Serve with rice."
     },
-    // {
-    //     title: "Pancakes",
-    //     ingredients: "Flour, Eggs, Milk, Sugar, Baking Powder, Salt",
-    //     steps: "1. Mix ingredients in a bowl. 2. Pour batter on a hot griddle. 3. Flip pancake when bubbles form."
-    // },
 ];
 
 const dispalyRecipes = () =>{
@@ -39,37 +34,31 @@ const dispalyRecipes = () =>{
 )
 }
 
-const addRecipe =() =>{
-    const recipeTitle =document.querySelector("#recipeTitle");
-    const recipeIngredients = document.querySelector("#recipeIngredients");
-    const recipeSteps = document.querySelector("#recipeStep");
+const addRecipe = (event) =>{
+      event.preventDefault();
+      const recipeTitle = document.getElementById("recipeTitle").value;
+      const recipeIngredients = document.getElementById("recipeIngredients").value;
+      const recipeStep = document.getElementById("recipeStep").value;
 
-    const recipeTitles = recipeTitle.value.trim();
-    const RecipeIngredients = recipeIngredients.value.trim();
-    const RecipeSteps = recipeSteps.value.trim();
-
-    if(recipeTitles !== "" && RecipeIngredients !== "" && RecipeSteps !== "") {
-       const newRecipe ={
-           title: recipeTitle,
-           ingredients: recipeIngredients,
-           steps: recipeSteps,
-       }
-       recipes.push(newRecipe);
-       
-       recipeTitle.value ="";
-       recipeIngredients.value ="";
-       recipeSteps.value ="";
-
-       dispalyRecipes();
-    }else{
-        alert("please fill out all fields")
-    }
+      if (recipeTitle.trim() !== "" && recipeIngredients.trim() !== "" && recipeStep.trim() !== "") {
+        const newRecipe ={
+            title: recipeTitle,
+            ingredients: recipeIngredients,
+            steps: recipeStep,
+        }
+        recipes.push(newRecipe);
+        
+        document.getElementById("recipeTitle").value ="";
+        document.getElementById("recipeIngredients").value ="";
+        document.getElementById("recipeStep").value ="";
+ 
+        dispalyRecipes();
+      }else{
+        alert("please fill out all the fields")
+      }
 }
 
-// const addRecipeBtn = document.querySelector("#Addrecipe");
-// addRecipeBtn.addEventListener("click",addRecipe);
-
-document.querySelector("#addRecipe").addEventListener("click", addRecipe);
+const recipeForm = document.getElementById("recipeForm");
+recipeForm.addEventListener("submit", addRecipe);
 
 dispalyRecipes();
-
