@@ -31,12 +31,43 @@ const dispalyRecipes = () =>{
 
         recipeCard.innerHTML =`
         <h2  class="text-lg font-bold">${recipe.title}</h2>
-        <p class="text-sm text-gray-400"><strong>Ingredients: &emap;<strong/>${recipe.ingredients}</p>
-        <p  class="text-sm"><strong>Steps: &emap;<strong/>${recipe.steps}</p>
+        <p class="text-sm text-gray-400"><strong>Ingredients: <strong/>${recipe.ingredients}</p>
+        <p  class="text-sm"><strong>Steps: <strong/>${recipe.steps}</p>
         `;
         recipelist.appendChild(recipeCard);
     }
 )
 }
 
+const addRecipe =() =>{
+    const recipeTitle =document.querySelector("#recipeTitle");
+    const recipeIngredients = document.querySelector("#recipeIngredients");
+    const recipeSteps = document.querySelector("#recipeStep");
+
+    const recipeTitles = recipeTitle.value.trim();
+    const RecipeIngredients = recipeIngredients.value.trim();
+    const RecipeSteps = recipeSteps.value.trim();
+
+    if(recipeTitles !== "" && RecipeIngredients !== "" && RecipeSteps !== "") {
+       const newRecipe ={
+           title: recipeTitle,
+           ingredients: recipeIngredients,
+           steps: recipeSteps,
+       }
+       recipes.push(newRecipe);
+       
+       recipeTitle.value ="";
+       recipeIngredients.value ="";
+       recipeSteps.value ="";
+
+       dispalyRecipes();
+    }else{
+        alert("please fill out all fields")
+    }
+}
+
+const addRecipeBtn = document.querySelector("#Addrecipe");
+addRecipeBtn.addEventListener("click",addRecipe);
+
 dispalyRecipes();
+
