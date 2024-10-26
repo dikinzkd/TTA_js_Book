@@ -36,6 +36,16 @@ const displayRecipes = () => {
         recipelist.appendChild(recipeCard);
     });
 }
+//..............................................code to error message......................................
+ const showError = (elementId, message)  => {
+    const errorElement = document.getElementById(elementId);
+    errorElement.classList.remove("hidden");
+ }
+
+ const hideError = (elementId) => {
+    const errorElement = document.getElementById(elementId);
+    errorElement.classList.add("hidden")
+ }
 
 // ..............................................Code to Add Recipe........................................
 const addRecipe = (event) => {
@@ -44,7 +54,30 @@ const addRecipe = (event) => {
     const recipeIngredients = document.getElementById("recipeIngredients").value.trim();
     const recipeStep = document.getElementById("recipeStep").value.trim();
 
-    if (recipeTitle !== "" && recipeIngredients !== "" && recipeStep !== "") {
+    // if (recipeTitle !== "" && recipeIngredients !== "" && recipeStep !== "") {
+
+    hideError("titileError");
+    hideError("IngredientsError");
+    hideError("stepsError");
+
+        let isvalid = true;
+
+        if  (recipeTitle === "") {
+            showError("titileError", "please enter the recipe title");
+            isvalid = false;
+        }
+
+        if (recipeIngredients === "") {
+            showError("IngredientsError", "please enter the recipe ingredients");
+            isvalid = false;
+        }
+
+        if (recipeStep === "") {
+            showError("stepsError", "please enter the recipe steps");
+            isvalid = false;
+        }
+
+        if (isvalid){
         const isDuplicated = recipes.some((recipe) => recipe.title.toLowerCase() === recipeTitle.toLowerCase());
         if (isDuplicated) {
             alert("Recipe already exists");
@@ -62,9 +95,10 @@ const addRecipe = (event) => {
 
             displayRecipes();
         }
-    } else {
-        alert("Please fill out all the fields");
-    }
+        }
+    // }else {
+    // //     alert("Please fill out all the fields");
+    // // }
 }
 
 // ..............................................Code to make Add Recipe Button Functional........................................
