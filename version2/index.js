@@ -1,5 +1,5 @@
 // .................................Array of Objects..................................................
-const recipes = [
+let recipes = [
     {
         title: "Spaghetti Bolognese",
         ingredients: "Spaghetti, Ground Beef, Tomato Sauce, Garlic, Onions, Olive Oil",
@@ -105,6 +105,7 @@ const addRecipe = (event) => {
             document.getElementById("recipeIngredients").value = "";
             document.getElementById("recipeStep").value = "";
 
+            saveRecipeToLocalStorage();
             displayRecipes();
         }
         }
@@ -115,5 +116,7 @@ const addRecipe = (event) => {
 
 // ..............................................Code to make Add Recipe Button Functional........................................
 document.querySelector("#addRecipe").addEventListener("click", addRecipe);
+
+loadRecipesFromLocalStorage();
 
 displayRecipes();
