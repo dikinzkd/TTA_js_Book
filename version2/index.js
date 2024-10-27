@@ -36,7 +36,19 @@ const displayRecipes = () => {
         recipelist.appendChild(recipeCard);
     });
 }
-//..............................................code to error message......................................
+//..............................................save recipe..........................................................
+const saveRecipeToLocalStorage = ()  => {
+    localStorage.setItem("recipes", JSON.stringify(recipes))
+}
+
+const loadRecipesFromLocalStorage = () =>{
+    const storedRecipe = localStorage.getItem("recipes");
+     
+    if (storedRecipe){
+        recipes = JSON.parse(storedRecipe)
+    }
+}
+//..............................................code to error message................................................
  const showError = (elementId, message)  => {
     const errorElement = document.getElementById(elementId);
     errorElement.classList.remove("hidden");
