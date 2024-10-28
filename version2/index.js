@@ -1,28 +1,12 @@
-// .................................Array of Objects..................................................
-let recipes = [
-    {
-        title: "Spaghetti Bolognese",
-        ingredients: "Spaghetti, Ground Beef, Tomato Sauce, Garlic, Onions, Olive Oil",
-        steps: "1. Boil pasta. 2. Cook ground beef. 3. Add sauce and garlic. 4. Mix with pasta."
-    },
-    {
-        title: "Chicken Curry",
-        ingredients: "Chicken, Curry Powder, Coconut Milk, Onions, Garlic, Ginger",
-        steps: "1. Cook chicken. 2. Add onions, garlic, ginger. 3. Add coconut milk and curry powder. 4. Simmer."
-    },
-    {
-        title: "Vegetable Stir-fry",
-        ingredients: "Broccoli, Carrots, Bell Peppers, Soy Sauce, Garlic, Olive Oil",
-        steps: "1. Stir-fry vegetables in olive oil. 2. Add garlic and soy sauce. 3. Serve with rice."
-    },
-];
+// ..............................................Array of Objects..................................................\\
+let recipes = [];
 
-// ..............................................Code to create and Display Recipe Cards........................................
+// ..............................................Code to create and Display Recipe Cards............................\\
 const displayRecipes = () => {
     const recipelist = document.querySelector("#recipelist");
     recipelist.innerHTML = "";
 
-    recipes.forEach((recipe) => {
+    recipes.forEach((recipe, index) => {
         const recipeCard = document.createElement("div");
         recipeCard.classList.add("bg-white", "p-4", "rounded", "shadow", "m-4");
 
@@ -30,13 +14,13 @@ const displayRecipes = () => {
         <h2 class="text-lg font-bold">${recipe.title}</h2>
         <p class="text-sm text-gray-400 font-thin"><strong>Ingredients: </strong>${recipe.ingredients}</p>
         <p class="text-sm font-thin"><strong>Steps: </strong>${recipe.steps}</p>
-        <button class="bg-blue-500 text-white px-2 py-1 rounded mt-2">Edit</button>
-        <button class="bg-red-500 text-white px-2 py-1 rounded m-2">Delete</button>
+        <button class="bg-blue-500 text-white px-2 py-1 rounded mt-2" onclick="editRecipe(${index})">Edit</button>
+        <button class="bg-red-500 text-white px-2 py-1 rounded m-2" onclick="deleteRecipe(${index})">Delete</button>
         `;
         recipelist.appendChild(recipeCard);
     });
 }
-//..............................................save recipe..........................................................
+//..................................................save recipe....................................................\\
 const saveRecipeToLocalStorage = ()  => {
     localStorage.setItem("recipes", JSON.stringify(recipes))
 }
@@ -48,7 +32,7 @@ const loadRecipesFromLocalStorage = () =>{
         recipes = JSON.parse(storedRecipe)
     }
 }
-//..............................................code to error message................................................
+//................................................code to error message............................................\\
  const showError = (elementId, message)  => {
     const errorElement = document.getElementById(elementId);
     errorElement.classList.remove("hidden");
@@ -59,14 +43,13 @@ const loadRecipesFromLocalStorage = () =>{
     errorElement.classList.add("hidden")
  }
 
-// ..............................................Code to Add Recipe........................................
+// ...................................................Code to Add Recipe...........................................\\
 const addRecipe = (event) => {
     event.preventDefault();
     const recipeTitle = document.getElementById("recipeTitle").value.trim();
     const recipeIngredients = document.getElementById("recipeIngredients").value.trim();
     const recipeStep = document.getElementById("recipeStep").value.trim();
 
-    // if (recipeTitle !== "" && recipeIngredients !== "" && recipeStep !== "") {
 
     hideError("titileError");
     hideError("IngredientsError");
@@ -109,12 +92,30 @@ const addRecipe = (event) => {
             displayRecipes();
         }
         }
-    // }else {
-    // //     alert("Please fill out all the fields");
-    // // }
-}
 
-// ..............................................Code to make Add Recipe Button Functional........................................
+}
+//....................................................add edit function.............................................\\
+const editRecipe = (index) =>{
+    const UpdateRecipeTitle = prompt("Enter recipe title", recipes[index].title);
+    const UpdateRecipeIngrdients = prompt("Enter recipe Ingredients", recipes[index].ingredients);
+    const UpdateRecipeSteps = prompt("Enter recipe steps", recipes[index].steps);
+
+    if(UpdateRecipeTitle && UpdateRecipeIngrdients && UpdateRecipeSteps){
+        recipes[index].title = UpdateRecipeTitle;
+        recipes[index].ingredients = UpdateRecipeIngrdients;
+        recipes[index].steps = UpdateRecipeSteps;
+
+        saveRecipeToLocalStorage();
+        displayRecipes();
+    }
+}
+//.................................................add delete function...............................................\\
+const deleteRecipe = (index) => {
+    recipes.splice(index,1);
+    saveRecipeToLocalStorage();
+    displayRecipes();
+}
+// ...........................................Code to make Add Recipe Button Functional............................\\
 document.querySelector("#addRecipe").addEventListener("click", addRecipe);
 
 loadRecipesFromLocalStorage();
