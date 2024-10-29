@@ -1,5 +1,6 @@
 // ..............................................Array of Objects..................................................\\
 let recipes = [];
+let oldRecipes = [];
 
 // ..............................................Code to create and Display Recipe Cards............................\\
 const displayRecipes = () => {
@@ -43,10 +44,16 @@ const displayRecipes = () => {
 //..................................................save recipe....................................................\\
 const saveRecipeToLocalStorage = ()  => {
     localStorage.setItem("recipes", JSON.stringify(recipes))
+    localStorage.setItem('oldRecipes', JSON.stringify(oldRecipes))
 }
 
 const loadRecipesFromLocalStorage = () =>{
     const storedRecipe = localStorage.getItem("recipes");
+    const  storedOldRecipe = localStorage.getItem('oldRecipes')
+
+    if (storedOldRecipe){
+        oldRecipes = JSON.parse(storedOldRecipe)
+    }
      
     if (storedRecipe){
         recipes = JSON.parse(storedRecipe)
@@ -183,7 +190,8 @@ const saveRecipe = (index) =>{
 }
 //................................................. delete function................................................\\
 const deleteRecipe = (index) => {
-    recipes.splice(index,1);
+    const deleteRecipe = recipes.splice(index,1);
+    oldRecipes.push(deleteRecipe);
     saveRecipeToLocalStorage();
     displayRecipes();
 }
