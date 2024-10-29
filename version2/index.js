@@ -12,10 +12,15 @@ const displayRecipes = () => {
             recipeCard.classList.add("bg-white", "p-4", "rounded", "shadow", "m-4");
     
             recipeCard.innerHTML = `
-            <h2 class="text-lg font-bold">${recipe.title}</h2>
+            <h2 class="text-lg font-bold" id="titleDisplay-${index}">${recipe.title}</h2>
+            <input type="text" id="titleInput-${index}" class="hidden border p-2 w-full mb-2 rounded-lg" 
+            value="${recipe.title}">
+
             <p class="text-sm text-gray-400 font-thin"><strong>Ingredients: </strong>${recipe.ingredients}</p>
+
             <p class="text-sm font-thin"><strong>Steps: </strong>${recipe.steps}</p>
-            <button class="bg-blue-500 text-white px-2 py-1 rounded mt-2" onclick="editRecipe(${index})">Edit</button>
+
+            <button class="bg-blue-500 text-white px-2 py-1 rounded mt-2" onclick="EditRecipes(${index})">Edit</button>
             <button class="bg-red-500 text-white px-2 py-1 rounded m-2" onclick="deleteRecipe(${index})">Delete</button>
             `;
             recipelist.appendChild(recipeCard);
@@ -35,7 +40,7 @@ const loadRecipesFromLocalStorage = () =>{
     }
 }
 //................................................code to error message............................................\\
- const showError = (elementId, message)  => {
+ const showError = (elementId)  => {
     const errorElement = document.getElementById(elementId);
     if (errorElement){
         errorElement.innerHTML =message;
@@ -99,7 +104,7 @@ const addRecipe = (event) => {
     
     }
     //....................................................add edit function.............................................\\
-    const editRecipe = (index) =>{
+    let EditRecipes = (index) => {
         const UpdateRecipeTitle = prompt("Enter recipe title", recipes[index].title);
         const UpdateRecipeIngrdients = prompt("Enter recipe Ingredients", recipes[index].ingredients);
         const UpdateRecipeSteps = prompt("Enter recipe steps", recipes[index].steps);
@@ -127,6 +132,8 @@ const recipeForm = document.getElementById("recipeForm");
 if (recipeForm){
     document.getElementById('recipeForm').addEventListener("submit", addRecipe);
 }
+
+
 loadRecipesFromLocalStorage();
 
 displayRecipes();
