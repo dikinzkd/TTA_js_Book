@@ -165,6 +165,22 @@ const cancelEdit = (index) =>{
     document.getElementById(`cancelBtn-${index}`).classList.add("hidden");
 }
 //....................................................save edit....................................................\\
+const saveRecipe = (index) =>{
+    const UpdateRecipeTitle = document.getElementById(`titleInput-${index}`).value.trim();
+    const UpdateRecipeIngrdients = document.getElementById(`ingredientsInput-${index}`).value.trim();
+    const UpdateRecipeSteps = document.getElementById(`stepsInput-${index}`).value.trim();
+
+    if(UpdateRecipeTitle && UpdateRecipeIngrdients && UpdateRecipeSteps){
+        recipes[index].title = UpdateRecipeTitle;
+        recipes[index].ingredients = UpdateRecipeIngrdients;
+        recipes[index].steps = UpdateRecipeSteps;
+            
+        saveRecipeToLocalStorage();
+        displayRecipes();
+    } else{
+        alert("please enter all the fields");
+    }
+}
 //................................................. delete function................................................\\
 const deleteRecipe = (index) => {
     recipes.splice(index,1);
