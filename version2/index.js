@@ -4,7 +4,7 @@ let recipes = [];
 // ..............................................Code to create and Display Recipe Cards............................\\
 const displayRecipes = () => {
     const recipelist = document.querySelector("#recipelist");
-    recipelist.innerHTML = "";
+     recipelist.innerHTML = "";
 
     if (recipelist){
         recipes.forEach((recipe, index) => {
@@ -16,12 +16,25 @@ const displayRecipes = () => {
             <input type="text" id="titleInput-${index}" class="hidden border p-2 w-full mb-2 rounded-lg" 
             value="${recipe.title}">
 
-            <p class="text-sm text-gray-400 font-thin"><strong>Ingredients: </strong>${recipe.ingredients}</p>
+            <p class="text-sm text-gray-400 font-thin" id="ingredientsDisplay-${index}"><strong>Ingredients: 
+            </strong>${recipe.ingredients}</p>
+            <textarea id="ingredientsInput-${index}" class="hidden border p-2 w-full mb-2 rounded-lg">
+            ${recipe.ingredients}</textarea>
 
-            <p class="text-sm font-thin"><strong>Steps: </strong>${recipe.steps}</p>
+            <p class="text-sm font-thin" id="stepsDisplay-${index}"><strong>Steps: </strong>${recipe.steps}</p>
+            <textarea id="stepsInput-${index}" class="hidden border p-2 w-full mb-2 rounded-lg">${recipe.steps}
+            </textarea>
 
-            <button class="bg-blue-500 text-white px-2 py-1 rounded mt-2" onclick="EditRecipes(${index})">Edit</button>
-            <button class="bg-red-500 text-white px-2 py-1 rounded m-2" onclick="deleteRecipe(${index})">Delete</button>
+            <button class="bg-blue-500 text-white px-2 py-1 rounded mt-2" id="editBtn-${index}" 
+            onclick="editRecipe(${index})">Edit</button>
+            <button class="bg-red-500 text-white px-2 py-1 rounded mt-2" id="deleteBtn-${index}"
+            onclick="deleteRecipe(${index})">Delete</button>
+
+            <button class="bg-green-500 text-white px-2 py-1 rounded mt-2 hidden" id="saveBtn-${index}" 
+            onclick="saveRecipe(${index})">Save</button>
+            <button class="bg-gray-500 text-white px-2 py-1 rounded mt-2 hidden" id="cancelBtn-${index}" 
+            onclick="cancelEdit(${index})">Cancel</button>
+
             `;
             recipelist.appendChild(recipeCard);
         });
@@ -103,29 +116,46 @@ const addRecipe = (event) => {
             }
     
     }
-    //....................................................add edit function.............................................\\
-    let EditRecipes = (index) => {
-        const UpdateRecipeTitle = prompt("Enter recipe title", recipes[index].title);
-        const UpdateRecipeIngrdients = prompt("Enter recipe Ingredients", recipes[index].ingredients);
-        const UpdateRecipeSteps = prompt("Enter recipe steps", recipes[index].steps);
-    
-        if(UpdateRecipeTitle && UpdateRecipeIngrdients && UpdateRecipeSteps){
-            recipes[index].title = UpdateRecipeTitle;
-            recipes[index].ingredients = UpdateRecipeIngrdients;
-            recipes[index].steps = UpdateRecipeSteps;
-    
-            saveRecipeToLocalStorage();
-            displayRecipes();
-        }
-    }
 }
-//.................................................add delete function...............................................\\
+ //....................................................edit function.............................................\\
+// const editRecipe = (index) =>{
+//     const UpdateRecipeTitle = prompt("Enter recipe title", recipes[index].title);
+//     const UpdateRecipeIngrdients = prompt("Enter recipe Ingredients", recipes[index].ingredients);
+//     const UpdateRecipeSteps = prompt("Enter recipe steps", recipes[index].steps);
+    
+//         if(UpdateRecipeTitle && UpdateRecipeIngrdients && UpdateRecipeSteps){
+//             recipes[index].title = UpdateRecipeTitle;
+//             recipes[index].ingredients = UpdateRecipeIngrdients;
+//             recipes[index].steps = UpdateRecipeSteps;
+    
+//             saveRecipeToLocalStorage();
+//             displayRecipes();
+//         }
+//     }
+
+const editRecipe = (index) => {
+    document.getElementById(`titleDisplay-${index}`).classList.add("hidden");
+    document.getElementById(`ingredientsDisplay-${index}`).classList.add("hidden");
+    document.getElementById(`stepsDisplay-${index}`).classList.add("hidden");
+
+    document.getElementById(`editBtn-${index}`).classList.add("hidden");
+    document.getElementById(`deleteBtn-${index}`).classList.add("hidden");
+
+    document.getElementById(`titleInput-${index}`).classList.remove("hidden");
+    document.getElementById(`ingredientsInput-${index}`).classList.remove("hidden");
+    document.getElementById(`stepsInput-${index}`).classList.remove("hidden");
+
+    document.getElementById(`saveBtn-${index}`).classList.remove("hidden");
+    document.getElementById(`cancelBtn-${index}`).classList.remove("hidden");
+}
+
+//................................................. delete function...............................................\\
 const deleteRecipe = (index) => {
     recipes.splice(index,1);
     saveRecipeToLocalStorage();
     displayRecipes();
 }
-// ...........................................Code to make Add Recipe Button Functional............................\\
+// ...........................................Code to make Recipe Button Functional............................\\
 
 const recipeForm = document.getElementById("recipeForm");
 
